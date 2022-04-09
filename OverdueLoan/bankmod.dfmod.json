@@ -1,0 +1,12 @@
+{
+    "ModTitle": "BankMod",
+    "ModVersion": "0.01",
+    "ModAuthor": "ecksport",
+    "ContactInfo": "please no",
+    "DFUnity_Version": "0.11.4",
+    "GUID": "60fc4cf0-41fe-44a7-8310-8e2a61456fff",
+    "Files": [
+        "Assets/Game/Mods/bankmod/bankmod.cs",
+        "Assets/Game/Mods/bankmod/bankmod.dfmod.json"
+    ]
+}
