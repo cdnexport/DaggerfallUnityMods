@@ -7,6 +7,7 @@ using DaggerfallWorkshop.Utility;
 using System.Linq;
 using DaggerfallConnect.Arena2;
 using System.Collections.Generic;
+using System;
 
 namespace mod1Mod
 {
@@ -38,24 +39,21 @@ namespace mod1Mod
             int index = -1;
             for (int i = notes.Count - 1; i >= 0; i--)
             {
-                var array = notes[i];
-                foreach (var item in array)
+                //0 is the date and town
+                //1 is null
+                //2 is the message
+                var message = notes[i][2].text;
+
+                if (message != null && message.Trim().Contains($"Accepted quest {quest.DisplayName}"))
                 {
-                    if (item.text != null && item.text.Trim().Equals($"I've accepted {quest.DisplayName}."))
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index != -1)
-                {
+                    index = i;
                     break;
                 }
             }
 
             if (index < 0)
             {
-                Debug.LogWarning($"mod1: Could not find log entry for {quest.DisplayName}.");
+                Debug.LogWarning($"QuestLogger: Could not find log entry for {quest.DisplayName}.");
             }
             else
             {
@@ -65,13 +63,21 @@ namespace mod1Mod
 
         static void QuestMachine_OnQuestStarted(Quest quest)
         {
-            if (quest.LastResourceReferenced.GetType() == typeof(Person))
+            try
             {
-                GameManager.Instance.PlayerEntity.Notebook.AddNote($"I've accepted {quest.DisplayName}.");
+                //Resources are stored in the Quest Machine as Key: Resource but the GetAllResources method does not include the key.
+                //eg. "qgiver_home" : Place
+                //Since we don't have the key we've hard coded the indexes that it appears correspond to the Quest Giver building and their name.
+                var qResources = quest.GetAllResources();
+
+                var buildingName = (qResources[1] as Place).SiteDetails.buildingName;
+                var qGiver = (qResources[2] as Person).DisplayName;
+
+                GameManager.Instance.PlayerEntity.Notebook.AddNote($"Accepted quest {quest.DisplayName} from {qGiver} at {buildingName}.");
             }
-            else
+            catch (Exception ex)
             {
-                Debug.Log($"mod1: Last resource {quest.LastResourceReferenced.GetType()} was not a person, no notebook entry created.");
+                Debug.Log($"QuestLogger: Could not log for {quest.DisplayName}. Exception: {ex.Message}");
             }
         }
     }
