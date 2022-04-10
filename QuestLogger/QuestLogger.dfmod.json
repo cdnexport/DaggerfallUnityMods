@@ -1,12 +1,12 @@
 {
-    "ModTitle": "mod1",
+    "ModTitle": "QuestLogger",
     "ModVersion": ".126",
     "ModAuthor": "ecksport",
     "ContactInfo": "dont",
     "DFUnity_Version": "0.11.4",
     "GUID": "6cada53b-72c2-44ac-bf91-3aca9e9b9742",
     "Files": [
-        "Assets/Game/Mods/mod1/mod1.cs",
-        "Assets/Game/Mods/mod1/mod1.dfmod.json"
+        "Assets/Game/Mods/QuestLogger/QuestLogger.cs",
+        "Assets/Game/Mods/QuestLogger/QuestLogger.dfmod.json"
     ]
 }
