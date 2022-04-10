@@ -11,7 +11,7 @@ using System;
 
 namespace mod1Mod
 {
-    public class mod1 : MonoBehaviour
+    public class QuestLogger : MonoBehaviour
     {
         static Mod mod;
 
@@ -21,7 +21,7 @@ namespace mod1Mod
             mod = initParams.Mod;
 
             var go = new GameObject(mod.Title);
-            go.AddComponent<mod1>();
+            go.AddComponent<QuestLogger>();
         }
 
         void Start()
